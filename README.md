@@ -15,6 +15,7 @@ var data = {
            };
 
 render() {
-  return <RealTimeChart maxVals={30} data={data}/>
+  return <RealTimeChart maxValues={30} data={data}/>
 }
+
 ```

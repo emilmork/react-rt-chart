@@ -2,7 +2,7 @@
   "name": "react-rt-chart",
   "version": "0.0.1",
   "description": "Real-time chart component for React using c3",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
     "compile": "babel -d lib src",
@@ -14,14 +14,11 @@
   },
   "keywords": [
     "React",
-    "Real-time",
+    "Real-time chart",
     "chart",
-    "time",
-    "series",
+    "time-series chart",
     "react",
-    "chart",
-    "c3",
-    "chart"
+    "c3"
   ],
   "author": "Emil Mork <emil.a.mork@gmail.com>",
   "license": "MIT",
@@ -36,6 +33,7 @@
   },
   "dependencies": {
     "c3": "^0.4.10",
+    "deepmerge": "^0.2.10",
     "react": "^0.13.3"
   }
 }
