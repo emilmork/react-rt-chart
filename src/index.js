@@ -10,12 +10,14 @@ export default class extends React.Component {
     this.limit = (this.props.maxValues || 10);
     this.count = 0;
   }
+
   componentDidMount() {
     this.initChart(); 
-
   }
+
   componentWillReceiveProps(nextProps) {
     if(!this.state.chart) return;
+    if(!nextProps.data || !nextProps.data.values) return;
     if(nextProps.data.values.length < this.props.fields.length) {
       throw new Error(`Values has a length of ${nextProps.values.length} but must be the same as fields: ${this.props.fields.length}`);
     }
@@ -33,7 +35,6 @@ export default class extends React.Component {
 
     if(this.count < this.limit) args['length'] = 0;
     this.state.chart.flow(args);
-
   }
 
   render() {
@@ -47,7 +48,7 @@ export default class extends React.Component {
     }
     var columns = [['x']];
     this.props.fields.forEach((f) => columns.push([f]));
-    
+
     var chart_temp = merge({
       axis: {
             x: {

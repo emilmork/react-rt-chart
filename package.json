@@ -2,10 +2,10 @@
   "name": "react-rt-chart",
   "version": "0.0.1",
   "description": "Real-time chart component for React using c3",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "compile": "babel -d lib src",
+    "compile": "babel -d . src",
     "prepublish": "npm run compile"
   },
   "repository": {
