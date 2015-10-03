@@ -75,6 +75,9 @@ You can provide a flow object object for customizing the animation. [c3.js flow 
 * **maxValues** - set the maximun values visible on the graph.
 
 
+##### TODO
+* Add tests
+
 
 
 
