@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import c3 from 'c3';
 import merge from 'deepmerge';
+import loadHistoryData from './columns';
 
 const isDate = (key) => key === "date";
 const isList = (data) => data && data.length;
@@ -22,37 +23,6 @@ var RTChart = React.createClass({
     return {
       chart: null
     };
-  },
-
-  loadHistoryData: function(initialData) {
-    if (initialData.length > this.limit) {
-        initialData = initialData.slice(initialData.length - this.limit);
-        this.count = this.limit;
-    }
-
-    var columnData = { 
-      'date': []
-    };
-
-    this.props.fields.forEach(f => columnData[f] = []);
-
-    initialData.forEach((value) => {
-      for (let key of Object.keys(value)) {
-        if (!columnData[key]) continue;
-        columnData[key].push(isDate(key) ? new Date(value[key]) : value[key]);
-      }
-    });
-
-    var columns = [];
-    for (let key of Object.keys(columnData)) {
-      if (isDate(key)) {
-        columns.push(['x'].concat(columnData[key]));
-      }
-
-      else columns.push([key].concat(columnData[key]));
-    }
-
-    return columns;
   },
 
   unload() {
@@ -78,7 +48,7 @@ var RTChart = React.createClass({
       this.resetChart();
     }
 
-    var columns = this.loadHistoryData([nextProps.data]);
+    var columns = loadHistoryData([nextProps.data], nextProps.fields, this.limit);
 
     var args = merge({
                 columns: columns,
@@ -101,7 +71,7 @@ var RTChart = React.createClass({
       throw new Error("prop type fields are missing. fields={['field',..]}");
     }
 
-    var { initialData, chart } = this.props;
+    var { initialData, chart, fields } = this.props;
 
     var defaultColumns = [['x']];
 
@@ -119,7 +89,7 @@ var RTChart = React.createClass({
     }, (chart || {}));
 
     chart_temp.bindto = ReactDOM.findDOMNode(this);
-    var columns = initialData ? this.loadHistoryData(initialData) : defaultColumns;
+    var columns = initialData ? loadHistoryData(initialData, fields, this.limit) : defaultColumns;
     chart_temp.data = {
       x: 'x',
       columns: columns
