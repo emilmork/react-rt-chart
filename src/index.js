@@ -11,7 +11,7 @@ const hasDataProperty = (data) => data.hasOwnProperty('date');
 var RTChart = React.createClass({
 
   componentDidMount: function() {
-    this.limit = (this.props.maxValues || 10);
+    this.limit = (this.props.maxValues || 30);
     this.count = this.props.initialData || 0;
     this.ids = this.props.fields;
 
@@ -24,27 +24,31 @@ var RTChart = React.createClass({
     };
   },
 
-  loadHistoryData: function(historicalData) {
-    if (historicalData.length > this.limit) {
-        historicalData = historicalData.slice(historicalData.length - this.limit);
+  loadHistoryData: function(initialData) {
+    if (initialData.length > this.limit) {
+        initialData = initialData.slice(initialData.length - this.limit);
         this.count = this.limit;
     }
 
-    var columnData = { 'date': []};
+    var columnData = { 
+      'date': []
+    };
+
     this.props.fields.forEach(f => columnData[f] = []);
 
-    historicalData.forEach((value) => {
-      let i = 0;
+    initialData.forEach((value) => {
       for (let key of Object.keys(value)) {
         if (!columnData[key]) continue;
         columnData[key].push(isDate(key) ? new Date(value[key]) : value[key]);
-        i++;
       }
     });
 
     var columns = [];
     for (let key of Object.keys(columnData)) {
-      if (key == "date") columns.push(['x'].concat(columnData[key]));
+      if (isDate(key)) {
+        columns.push(['x'].concat(columnData[key]));
+      }
+
       else columns.push([key].concat(columnData[key]));
     }
 
@@ -100,7 +104,7 @@ var RTChart = React.createClass({
       return;
     }
 
-    var { historicalData, chart } = this.props;
+    var { initialData, chart } = this.props;
 
     var defaultColumns = [
       ['x']
@@ -119,7 +123,7 @@ var RTChart = React.createClass({
     }, (chart || {}));
 
     chart_temp.bindto = ReactDOM.findDOMNode(this);
-    var columns = historicalData ? this.loadHistoryData(historicalData) : defaultColumns;
+    var columns = initialData ? this.loadHistoryData(initialData) : defaultColumns;
     chart_temp.data = {
       x: 'x',
       columns: columns
@@ -130,7 +134,7 @@ var RTChart = React.createClass({
 
     this.setState({
       chart: chart,
-      historicalData: historicalData
+      initialData: initialData
     });
   },
 
