@@ -36,6 +36,7 @@ var RTChart = React.createClass({
     historicalData.forEach((value) => {
       let i = 0;
       for (let key of Object.keys(value)) {
+        if (!columnData[key]) continue;
         columnData[key].push(isDate(key) ? new Date(value[key]) : value[key]);
         i++;
       }
@@ -98,6 +99,9 @@ var RTChart = React.createClass({
         "prop type fields are missing. fields={['field',..]}");
       return;
     }
+
+    var { historicalData, chart } = this.props;
+
     var defaultColumns = [
       ['x']
     ];
@@ -112,12 +116,13 @@ var RTChart = React.createClass({
           }
         }
       }
-    }, (this.props.chart || {}));
+    }, (chart || {}));
 
     chart_temp.bindto = ReactDOM.findDOMNode(this);
+    var columns = historicalData ? this.loadHistoryData(historicalData) : defaultColumns;
     chart_temp.data = {
       x: 'x',
-      columns: this.loadHistoryData(this.props.historicalData) || defaultColumns
+      columns: columns
     };
     chart_temp.axis.x.type = 'timeseries';
 
@@ -125,7 +130,7 @@ var RTChart = React.createClass({
 
     this.setState({
       chart: chart,
-      historicalData: this.props.historicalData
+      historicalData: historicalData
     });
   },
 
