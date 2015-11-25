@@ -28,7 +28,13 @@
   "homepage": "https://github.com/emilmork/react-rt-chart",
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
     "chai": "^3.3.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.6.0",
     "mocha": "^2.3.3"
   },
   "dependencies": {
