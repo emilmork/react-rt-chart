@@ -69,10 +69,9 @@ var RTChart = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     if (!this.state.chart) return;
     if (!nextProps.data) return;
+
     if (Object.keys(nextProps.data).length < this.props.fields.length) {
-      throw new Error(
-        `Values has a length of ${nextProps.values.length} but must be the same as fields: ${this.props.fields.length}`
-      );
+      console.warn(`Values has a length of ${nextProps.values.length} but must be the same as fields: ${this.props.fields.length}`);
     }
 
     if (nextProps.reset) {
@@ -99,16 +98,13 @@ var RTChart = React.createClass({
 
   initChart: function() {
     if (!this.props.fields) {
-      throw new Error(
-        "prop type fields are missing. fields={['field',..]}");
-      return;
+      throw new Error("prop type fields are missing. fields={['field',..]}");
     }
 
     var { initialData, chart } = this.props;
 
-    var defaultColumns = [
-      ['x']
-    ];
+    var defaultColumns = [['x']];
+
     this.props.fields.forEach((f) => defaultColumns.push([f]));
 
     var chart_temp = merge({
@@ -128,6 +124,7 @@ var RTChart = React.createClass({
       x: 'x',
       columns: columns
     };
+    // Make sure we use timeseries in case of override
     chart_temp.axis.x.type = 'timeseries';
 
     var chart = c3.generate(chart_temp);
