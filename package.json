@@ -2,11 +2,10 @@
   "name": "react-rt-chart",
   "version": "0.0.1",
   "description": "Real-time chart component for React using c3",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "compile": "babel -d . src",
-    "prepublish": "npm run compile"
+    "prepublish": "gulp"
   },
   "repository": {
     "type": "git",
@@ -33,8 +32,6 @@
     "chai": "^3.3.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-sourcemaps": "^1.6.0",
     "mocha": "^2.3.3"
   },
   "dependencies": {
