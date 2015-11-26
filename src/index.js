@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import c3 from 'c3';
 import merge from 'deepmerge';
-import loadHistoryData from './columns';
+import loadHistoryData from './loadHistoryData';
 
 const isDate = (key) => key === "date";
 const isList = (data) => data && data.length;
