@@ -1,6 +1,6 @@
 const isDate = (key) => key === "date";
 
-const createColumns = (initialData, fields, maxValues) => {
+module.exports = function (initialData, fields, maxValues) {
     if (initialData.length > maxValues) {
         initialData = initialData.slice(initialData.length - this.limit);
     }
@@ -28,6 +28,4 @@ const createColumns = (initialData, fields, maxValues) => {
     }
 
     return columns;
-}
-
-export default createColumns;
+};
