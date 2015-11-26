@@ -2,82 +2,131 @@ react-rt-chart
 ===
 A React component wrapping [c3.js flow API](http://c3js.org/samples/api_flow.html) that makes it easy to create real-time charts.
 
-## Install
+### Install
 ```bash
 npm install react-rt-chart
 ```
 
-### Usage
+### Example Usage
 
-Render a real-time chart with 10 visible values. The graph will update when it receives new data props. The data format consist of a timestimp and one or more values.
-
-This example udpates two graph lines (data1 and data2) at the same time:
-
-```javascript
-import RealTimeChart from 'react-rt-chart';
-
-class TimeSeries extends React.Component {
-    constructor(){
-        this.state = { data: null };
-        
-        setInterval(() => {
-            this.setState({data: { 
-                date: new Date().getTime(), 
-                values: [{id: 'data1', value: 52},{id: 'data2',value: 76}]
-            }});
-        }, 1000);
-    }
-    render() {
-        return <RealTimeChart 
-                maxValues={10} 
-                fields={['data1','data2']} 
-                data={this.state.data} />
-    }
-}
+```bash
+import RTChart from 'react-rt-chart';
 ```
 
-### Configuration
-
-You can provide a chart object to customize the graph. See [c3js.org](http://c3js.org) for options.
-#### Example - Chart options
 ```javascript
-    render() {
+componentDidMount() {
+    setInterval(() => this.forceUpdate(), 1000);
+},
+
+render() {
+    var data = {
+      date: new Date(),
+      Car: getRandomValue(),
+      Bus: getRandomValue()
+    };
+    
+    return <RTChart
+            fields={['Car','Bus']}
+            data={data} />
+}
+```
+![Awesome cat gif](http://imgur.com/BgABXwt.gif)
+
+
+### Properties
+
+#### `fields` (required)
+
+The names of the provided values
+
+```javascript
+fields={['name_1', 'name_2']}
+```
+
+#### `data`
+An object that Will be added to the graph, consist of
+an date and the field values.
+```javascript
+{
+  date: new Date(),
+  name_1: 100,
+  name_2: 200
+}
+```
+#### `maxValues` (default - 30)
+The number of values visible on the graph.
+```javascript
+maxValues={60}
+```
+#### `initialData`
+An list of values that will be loaded into the graph immediately
+
+```javascript
+var initialdata = [
+{ date: .., name_1: .., name_2: ..},
+{ date: .., name_1: .., name_2: ..},
+..
+];
+initialData={initialData}
+```
+#### `chart`
+Object to customize the graph. See [c3js - references](http://c3js.org/reference.html) for all options.
+Example
+```javascript
         var chart = {
                 axis: {
                     y: { min: 50, max: 100 }
+                },
+                point: {
+                    show: false
                 }
-            };
-        return <RealTimeChart
+        };
+        return <RtChart
                 chart={chart}
-                fields={['data1','data2']} 
+                fields={['data1','data2']}
                 data={this.state.data} />
     }
 ```
+#### `flow`
+Object to customize the animation. [c3.js flow API](http://c3js.org/reference.html#api-flow) for all options.
 
-You can provide a flow object object for customizing the animation. [c3.js flow API](http://c3js.org/reference.html#api-flow) for options.
-#### Example - Set animation duration
 ```javascript
     render() {
         var flow = {
                 duration: 200
             };
-        return <RealTimeChart
+        return <RtChart
                 flow={flow}
-                fields={['data1','data2']} 
+                fields={['data1','data2']}
                 data={this.state.data} />
     }
 ```
-#### Props
-* **fields** (required) - ['Name1','Name2', ...]
-* **data** [ data: Date, values: {[id: 'Name1', value: Number},{id: 'Name2}, ...]}
-* **chart** - chart options
-* **flow** - flow options
-* **maxValues** - set the maximun values visible on the graph.
 
+#### `reset`
 
-##### TODO
-* Add tests
+Reset and unload the chart if true
 
+```javascript
+reset={true}
+```
+---
 
+### Changelog
 
+#### `v1.0.0`
 
+**Changed:**
+
+Data format have changed from using an id field to just use the object properties
+New format:
+```javascript
+data={{date: [Date], val1: [Number], val2: [Number], ...}}
+```
+**Added**
+- Added ```initialData={[]}```
+- Added ```reset={Boolean}
+- Some bug fixes
+
+#### `0.0.1`
+
+Inital version.
