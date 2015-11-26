@@ -44,8 +44,8 @@ fields={['name_1', 'name_2']}
 ```
 
 #### `data`
-An object that Will be added to the graph, consist of
-an date and the field values.
+New value to append to graph
+
 ```javascript
 {
   date: new Date(),
@@ -59,7 +59,7 @@ The number of values visible on the graph.
 maxValues={60}
 ```
 #### `initialData`
-An list of values that will be loaded into the graph immediately
+An list of values that will be loaded into the graph immediately.
 
 ```javascript
 var initialdata = [
@@ -70,7 +70,7 @@ var initialdata = [
 initialData={initialData}
 ```
 #### `chart`
-Object to customize the graph. See [c3js - references](http://c3js.org/reference.html) for all options.
+Chart options. See [c3js - references](http://c3js.org/reference.html) for all options.
 Example
 ```javascript
         var chart = {
@@ -88,7 +88,7 @@ Example
     }
 ```
 #### `flow`
-Object to customize the animation. [c3.js flow API](http://c3js.org/reference.html#api-flow) for all options.
+Animation options. See [c3.js flow API](http://c3js.org/reference.html#api-flow) for all options.
 
 ```javascript
     render() {
@@ -104,7 +104,7 @@ Object to customize the animation. [c3.js flow API](http://c3js.org/reference.ht
 
 #### `reset`
 
-Reset and unload the chart if true
+Reset and unload the chart if true.
 
 ```javascript
 reset={true}
