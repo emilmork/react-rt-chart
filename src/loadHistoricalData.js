@@ -2,7 +2,7 @@ const isDate = (key) => key === "date";
 
 module.exports = function (initialData, fields, maxValues) {
     if (initialData.length > maxValues) {
-        initialData = initialData.slice(initialData.length - this.limit);
+        initialData = initialData.slice(initialData.length - maxValues);
     }
 
     var columnData = { 
