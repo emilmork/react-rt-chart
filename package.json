@@ -1,6 +1,6 @@
 {
   "name": "react-rt-chart",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Real-time chart component for React using c3",
   "main": "./dist/index.js",
   "scripts": {
