@@ -8,6 +8,9 @@ const isDate = (key) => key === "date";
 const isList = (data) => data && data.length;
 const emptyList = (list) => isList(data) && list.length > 1;
 const hasDataProperty = (data) => data.hasOwnProperty('date');
+const notEmptyList = (initialData) => {
+  return initialData != null && initialData.length != null && initialData.length > 0;
+};
 
 var RTChart = React.createClass({
 
@@ -89,7 +92,7 @@ var RTChart = React.createClass({
     }, (chart || {}));
 
     chart_temp.bindto = ReactDOM.findDOMNode(this);
-    var columns = initialData ? loadHistoryData(initialData, fields, this.limit) : defaultColumns;
+    var columns = notEmptyList(initialData) ? loadHistoryData(initialData, fields, this.limit) : defaultColumns;
     chart_temp.data = {
       x: 'x',
       columns: columns
