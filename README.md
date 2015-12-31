@@ -32,6 +32,9 @@ render() {
 ```
 ![Awesome cat gif](http://imgur.com/BgABXwt.gif)
 
+### Styling
+
+To use the default styling include c3.css from [github](https://github.com/masayuki0812/c3/blob/master/c3.css) or from node_modules/c3 within react-rt-chart.
 
 ### Properties
 

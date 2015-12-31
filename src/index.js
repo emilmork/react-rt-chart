@@ -2,21 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import c3 from 'c3';
 import merge from 'deepmerge';
-import loadHistoryData from './loadHistoryData';
+import loadHistoryData from './loadHistoricalData';
 
 const isDate = (key) => key === "date";
 const isList = (data) => data && data.length;
-const emptyList = (list) => isList(data) && list.length > 1;
+const emptyList = (list) => !isList(list) || list.length == 0;
 const hasDataProperty = (data) => data.hasOwnProperty('date');
+
+const updateHistoricalData = (props, nextProps) => {
+  var lastData = props.initialData;
+  var nextData = nextProps.initialData;
+
+  if (!lastData && !nextData) return false;
+
+  if (emptyList(nextData)) return false;
+
+  if (emptyList(lastData) && !emptyList(nextData)) {
+    return true;
+  }
+
+  return nextData.length > lastData.length;
+}
 
 var RTChart = React.createClass({
 
   componentDidMount: function() {
-    this.limit = (this.props.maxValues || 30);
-    this.count = this.props.initialData || 0;
-    this.ids = this.props.fields;
+    var { initialData, maxValues } = this.props;
 
-    this.initChart();
+    this.limit = maxValues || 30;
+    this.count = isList(initialData) ? initialData.length : 0;
+
+    this.initChart(this.props);
   },
 
   getInitialState: function() {
@@ -33,10 +49,16 @@ var RTChart = React.createClass({
 
   resetChart: function() {
     this.unload();
-    this.initChart();
+    this.initChart(this.props);
   },
 
   componentWillReceiveProps: function(nextProps) {
+    
+    if (updateHistoricalData(this.props, nextProps)) {
+      this.initChart(nextProps);
+      return;
+    }
+
     if (!this.state.chart) return;
     if (!nextProps.data) return;
 
@@ -44,8 +66,9 @@ var RTChart = React.createClass({
       console.warn(`Values has a length of ${nextProps.values.length} but must be the same as fields: ${this.props.fields.length}`);
     }
 
+
     if (nextProps.reset) {
-      this.resetChart();
+      this.resetChart(nextProps);
     }
 
     var columns = loadHistoryData([nextProps.data], nextProps.fields, this.limit);
@@ -66,16 +89,20 @@ var RTChart = React.createClass({
     return <div style = { this.props.style } ref='chart'/>
   },
 
-  initChart: function() {
-    if (!this.props.fields) {
+  initChart: function(props) {
+    if (!props.fields) {
       throw new Error("prop type fields are missing. fields={['field',..]}");
     }
 
-    var { initialData, chart, fields } = this.props;
+    if (this.state.chart) {
+      this.unload();
+    }
+
+    var { initialData, chart, fields } = props;
 
     var defaultColumns = [['x']];
 
-    this.props.fields.forEach((f) => defaultColumns.push([f]));
+    props.fields.forEach((f) => defaultColumns.push([f]));
 
     var chart_temp = merge({
       axis: {
@@ -89,7 +116,7 @@ var RTChart = React.createClass({
     }, (chart || {}));
 
     chart_temp.bindto = ReactDOM.findDOMNode(this);
-    var columns = initialData ? loadHistoryData(initialData, fields, this.limit) : defaultColumns;
+    var columns = !emptyList(initialData) ? loadHistoryData(initialData, fields, this.limit) : defaultColumns;
     chart_temp.data = {
       x: 'x',
       columns: columns
