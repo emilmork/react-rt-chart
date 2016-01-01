@@ -27,6 +27,7 @@ const updateHistoricalData = (props, nextProps) => {
 var RTChart = React.createClass({
 
   componentDidMount: function() {
+
     var { initialData, maxValues } = this.props;
 
     this.limit = maxValues || 30;
