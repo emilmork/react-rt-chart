@@ -21,7 +21,7 @@ const updateHistoricalData = (props, nextProps) => {
     return true;
   }
 
-  return nextData.length > lastData.length;
+  return nextData.length != lastData.length;
 }
 
 var RTChart = React.createClass({
