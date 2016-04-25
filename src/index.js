@@ -116,14 +116,24 @@ var RTChart = React.createClass({
       }
     }, (chart || {}));
 
-    chart_temp.bindto = ReactDOM.findDOMNode(this);
     var columns = !emptyList(initialData) ? loadHistoryData(initialData, fields, this.limit) : defaultColumns;
-    chart_temp.data = {
-      x: 'x',
-      columns: columns
-    };
-    // Make sure we use timeseries in case of override
+    var chart_temp = merge({
+      axis: {
+        x: {
+          type: 'timeseries',
+          tick: {
+            format: '%H:%M:%S',
+          }
+        }
+      },
+      data: {
+        x: 'x',
+        columns: columns
+      }
+    }, (chart || {}));
+    
     chart_temp.axis.x.type = 'timeseries';
+    chart_temp.bindto = ReactDOM.findDOMNode(this);
 
     var chart = c3.generate(chart_temp);
 

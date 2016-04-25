@@ -116,6 +116,10 @@ reset={true}
 
 ### Changelog
 
+#### `v1.1.3`
+
+Make it possible to change chart types
+
 #### `v1.0.0`
 
 **Changed:**
