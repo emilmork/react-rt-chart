@@ -116,6 +116,11 @@ reset={true}
 
 ### Changelog
 
+#### `v1.1.4`
+
+- Move react* to devDeps (#3) [#3](https://github.com/emilmork/react-rt-chart/pull/3)
+- Use component refs instead of getDOMNode [#4](https://github.com/emilmork/react-rt-chart/pull/4)
+
 #### `v1.1.3`
 
 Make it possible to change chart types
