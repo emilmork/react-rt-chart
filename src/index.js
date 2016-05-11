@@ -133,7 +133,7 @@ var RTChart = React.createClass({
     }, (chart || {}));
     
     chart_temp.axis.x.type = 'timeseries';
-    chart_temp.bindto = ReactDOM.findDOMNode(this);
+    chart_temp.bindto = this.refs.chart;
 
     var chart = c3.generate(chart_temp);
 
