@@ -54,7 +54,7 @@ var RTChart = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    
+
     if (updateHistoricalData(this.props, nextProps)) {
       this.initChart(nextProps);
       return;
@@ -131,8 +131,7 @@ var RTChart = React.createClass({
         columns: columns
       }
     }, (chart || {}));
-    
-    chart_temp.axis.x.type = 'timeseries';
+
     chart_temp.bindto = this.refs.chart;
 
     var chart = c3.generate(chart_temp);
