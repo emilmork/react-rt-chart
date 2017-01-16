@@ -24,7 +24,7 @@ render() {
       Car: getRandomValue(),
       Bus: getRandomValue()
     };
-    
+
     return <RTChart
             fields={['Car','Bus']}
             data={data} />
@@ -115,6 +115,10 @@ reset={true}
 ---
 
 ### Changelog
+
+#### `v1.2.0`
+
+- Make it possible to use different chart types, not just timeseries
 
 #### `v1.1.4`
 
