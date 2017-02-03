@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import c3 from 'c3';
 import merge from 'deepmerge';
 import loadHistoryData from './loadHistoricalData';
+import filterReactDomProps from 'filter-react-dom-props';
 
 const isDate = (key) => key === "date";
 const isList = (data) => data && data.length;
@@ -87,7 +88,7 @@ var RTChart = React.createClass({
   },
 
   render: function() {
-    return <div style = { this.props.style } ref='chart'/>
+    return <div {...filterReactDomProps(this.props)} ref='chart'/>
   },
 
   initChart: function(props) {

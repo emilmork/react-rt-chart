@@ -39,6 +39,7 @@
   "dependencies": {
     "babel-polyfill": "^6.2.0",
     "c3": "^0.4.10",
-    "deepmerge": "^0.2.10"
+    "deepmerge": "^0.2.10",
+    "filter-react-dom-props": "0.0.2"
   }
 }
