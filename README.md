@@ -116,6 +116,10 @@ reset={true}
 
 ### Changelog
 
+#### `v1.3.0`
+
+- Accept any valid react props [#8](https://github.com/emilmork/react-rt-chart/pull/8)
+
 #### `v1.2.0`
 
 - Make it possible to use different chart types, not just timeseries
