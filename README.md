@@ -116,6 +116,10 @@ reset={true}
 
 ### Changelog
 
+### `v2.0.0`
+
+- Add support for React16+ [#11](https://github.com/emilmork/react-rt-chart/pull/11)
+
 #### `v1.3.0`
 
 - Accept any valid react props [#8](https://github.com/emilmork/react-rt-chart/pull/8)
