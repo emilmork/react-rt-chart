@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import c3 from 'c3';
 import merge from 'deepmerge';
 import loadHistoryData from './loadHistoricalData';
 import filterReactDomProps from 'filter-react-dom-props';
+import PropTypes from 'prop-types';
 
 const isDate = (key) => key === "date";
 const isList = (data) => data && data.length;
@@ -25,9 +26,17 @@ const updateHistoricalData = (props, nextProps) => {
   return nextData.length != lastData.length;
 }
 
-var RTChart = React.createClass({
+class RTChart extends Component {
 
-  componentDidMount: function() {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      chart: null
+    };
+  }
+
+  componentDidMount() {
 
     var { initialData, maxValues } = this.props;
 
@@ -35,26 +44,20 @@ var RTChart = React.createClass({
     this.count = isList(initialData) ? initialData.length : 0;
 
     this.initChart(this.props);
-  },
-
-  getInitialState: function() {
-    return {
-      chart: null
-    };
-  },
+  }
 
   unload() {
     this.state.chart.unload({
       ids: this.props.fields
     });
-  },
+  }
 
-  resetChart: function() {
+  resetChart() {
     this.unload();
     this.initChart(this.props);
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
 
     if (updateHistoricalData(this.props, nextProps)) {
       this.initChart(nextProps);
@@ -85,14 +88,14 @@ var RTChart = React.createClass({
     if (this.count < this.limit) args['length'] = 0;
 
     this.state.chart.flow(args);
-  },
+  }
 
-  render: function() {
+  render() {
     return <div {...filterReactDomProps(this.props)} ref='chart'/>
-  },
+  }
 
-  initChart: function(props) {
-    if (!props.fields) {
+  initChart() {
+    if (!this.props.fields) {
       throw new Error("prop type fields are missing. fields={['field',..]}");
     }
 
@@ -100,11 +103,11 @@ var RTChart = React.createClass({
       this.unload();
     }
 
-    var { initialData, chart, fields } = props;
+    var { initialData, chart, fields } = this.props;
 
     var defaultColumns = [['x']];
 
-    props.fields.forEach((f) => defaultColumns.push([f]));
+    this.props.fields.forEach((f) => defaultColumns.push([f]));
 
     var chart_temp = merge({
       axis: {
@@ -141,14 +144,14 @@ var RTChart = React.createClass({
       chart: chart,
       initialData: initialData
     });
-  },
+  }
 
   propTypes: {
-    dateFormat: React.PropTypes.string,
-    chart: React.PropTypes.object,
-    fields: React.PropTypes.array.isRequired,
-    maxValues: React.PropTypes.number
+    dateFormat: PropTypes.string,
+    chart: PropTypes.object,
+    fields: PropTypes.array.isRequired,
+    maxValues: PropTypes.number
   }
-});
+}
 
 module.exports = RTChart;
