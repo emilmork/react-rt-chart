@@ -2,6 +2,8 @@ react-rt-chart
 ===
 A React component wrapping [c3.js flow API](http://c3js.org/samples/api_flow.html) that makes it easy to create real-time charts.
 
+**NOT MAINTAINED (Looking for maintainers)**
+
 ### Install
 ```bash
 npm install react-rt-chart
